@@ -1,9 +1,9 @@
-﻿using log4net.Appender;
+using log4net.Appender;
 using log4net.Core;
 
 namespace log4net.loggly
 {
-	public class LogglyAppender : AppenderSkeleton
+	public class LogglyBufferringAppender : BufferingAppenderSkeleton
 	{
 		public static readonly string InputKeyProperty = "LogglyInputKey";
 
@@ -19,8 +19,21 @@ namespace log4net.loggly
 
 		protected override void Append(LoggingEvent loggingEvent)
 		{
-			Formatter.AppendAdditionalLoggingInformation(Config, loggingEvent.GetLoggingEventData(FixFlags.All));
-			Client.Send(Config, (string)loggingEvent.Properties[InputKeyProperty], Formatter.ToJson(loggingEvent));
+			var data = loggingEvent.GetLoggingEventData(FixFlags.All);
+			Formatter.AppendAdditionalLoggingInformation(Config, data);
+			if (!loggingEvent.Properties.Contains(InputKeyProperty))
+			{
+				loggingEvent.Properties[InputKeyProperty] = Config.DefaultInputKey;
+			}
+			base.Append(loggingEvent);
+		}
+
+		protected override void SendBuffer(LoggingEvent[] loggingEvents)
+		{
+			foreach (var loggingEvent in loggingEvents)
+			{
+				Client.Send(Config, (string)loggingEvent.Properties[InputKeyProperty], Formatter.ToJson(loggingEvent));
+			}
 		}
 	}
 }

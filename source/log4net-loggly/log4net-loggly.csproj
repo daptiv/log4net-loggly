@@ -48,9 +48,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ILogglyAppenderConfig.cs" />
-    <Compile Include="SendToLoggley.cs" />
-    <Compile Include="DictionaryOfListsExtensions.cs" />
-    <Compile Include="ISendToLoggley.cs" />
+    <Compile Include="ILogglyClient.cs" />
+    <Compile Include="LogglyAppenderConfig.cs" />
+    <Compile Include="LogglyBufferringAppender.cs" />
+    <Compile Include="LogglyClient.cs" />
+    <Compile Include="LogglyFormatter.cs" />
+    <Compile Include="ILogglyFormatter.cs" />
     <Compile Include="LogglyAppender.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

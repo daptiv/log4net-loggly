@@ -21,7 +21,7 @@ namespace log4net.loggly
 			}
 		}
 
-		public string DefaultInputKey { get; set; }
+		public string InputKey { get; set; }
 
 		public string UserAgent { get; set; }
 

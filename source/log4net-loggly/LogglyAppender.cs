@@ -13,14 +13,14 @@ namespace log4net.loggly
 		private ILogglyAppenderConfig Config = new LogglyAppenderConfig();
 
 		public string RootUrl { set { Config.RootUrl = value; } }
-		public string DefaultInputKey { set { Config.DefaultInputKey = value; } }
+		public string InputKey { set { Config.InputKey = value; } }
 		public string UserAgent { set { Config.UserAgent = value; } }
 		public int TimeoutInSeconds { set { Config.TimeoutInSeconds = value; } }
 
 		protected override void Append(LoggingEvent loggingEvent)
 		{
-			Formatter.AppendAdditionalLoggingInformation(Config, loggingEvent.GetLoggingEventData(FixFlags.All));
-			Client.Send(Config, (string)loggingEvent.Properties[InputKeyProperty], Formatter.ToJson(loggingEvent));
+			Formatter.AppendAdditionalLoggingInformation(Config, loggingEvent);
+			Client.Send(Config, Config.InputKey, Formatter.ToJson(loggingEvent));
 		}
 	}
 }

@@ -1,0 +1,7 @@
+*/bin/*
+*/obj/*
+*.user
+*.suo
+*.dotCover
+_ReSharper*
+source/_ReSharper.log4net-loggly/*
